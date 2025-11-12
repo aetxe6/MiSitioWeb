@@ -3,21 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hola Mundo Interactivo</title>
+  <title>Hola Mundo con Migas de Pan</title>
   <style>
     body {
       background-color: #f4f4f9;
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
     h1 {
       color: #333;
-      margin-bottom: 20px;
     }
     button {
       padding: 10px 20px;
@@ -28,6 +26,7 @@
       background-color: #4CAF50;
       color: white;
       transition: background-color 0.3s;
+      margin: 5px;
     }
     button:hover {
       background-color: #45a049;
@@ -37,17 +36,75 @@
       font-size: 20px;
       color: #555;
     }
+    .breadcrumbs {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .breadcrumbs a {
+      text-decoration: none;
+      color: #4CAF50;
+      margin-right: 5px;
+    }
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+    .breadcrumbs span {
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Migas de pan -->
+  <div class="breadcrumbs" id="breadcrumbs"></div>
+
+  <!-- Hola Mundo -->
   <h1>¡Hola Mundo! 🌎</h1>
   <button onclick="mostrarMensaje()">Haz clic aquí</button>
   <div id="mensaje"></div>
 
+  <!-- Navegación de ejemplo para migas de pan -->
+  <div>
+    <button onclick="navegar('inicio')">Inicio</button>
+    <button onclick="navegar('productos')">Productos</button>
+    <button onclick="navegar('productos/electronica')">Electrónica</button>
+    <button onclick="navegar('productos/electronica/moviles')">Móviles</button>
+  </div>
+
   <script>
+    // Función del botón Hola Mundo
     function mostrarMensaje() {
       document.getElementById('mensaje').textContent = "¡Has presionado el botón! 🎉";
     }
+
+    // Migas de pan
+    let ruta = ['Inicio'];
+
+    function actualizarBreadcrumbs() {
+      const container = document.getElementById('breadcrumbs');
+      container.innerHTML = ruta.map((item, index) => {
+        if (index === ruta.length - 1) {
+          return `<span>${item}</span>`;
+        } else {
+          return `<a href="#" onclick="volver(${index})">${item}</a> &gt; `;
+        }
+      }).join('');
+    }
+
+    function navegar(path) {
+      const partes = path.split('/');
+      ruta = partes.map(p => p.charAt(0).toUpperCase() + p.slice(1));
+      actualizarBreadcrumbs();
+    }
+
+    function volver(index) {
+      ruta = ruta.slice(0, index + 1);
+      actualizarBreadcrumbs();
+    }
+
+    // Inicializamos las migas de pan
+    actualizarBreadcrumbs();
   </script>
+
 </body>
 </html>

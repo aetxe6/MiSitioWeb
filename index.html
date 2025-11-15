@@ -1,110 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hola Mundo con Migas de Pan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda de Instrumentos</title>
   <style>
     body {
-      background-color: #f4f4f9;
+      margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      z-index: 1000;
     }
-    h1 {
-      color: #333;
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      transition: background-color 0.3s;
-      margin: 5px;
+    nav ul li {
+      position: relative;
     }
-    button:hover {
-      background-color: #45a049;
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
     }
-    #mensaje {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #555;
+    /* Dropdown */
+    .dropdown {
+      display: none;
+      position: absolute;
+      background: #333;
+      padding: 0.5rem;
+      top: 100%;
+      left: 0;
     }
+    li:hover .dropdown {
+      display: block;
+    }
+    /* Sidebar */
+    #sidebar {
+      width: 220px;
+      background: #f4f4f4;
+      padding: 1rem;
+      position: fixed;
+      top: 70px;
+      bottom: 0;
+      overflow-y: auto;
+    }
+    #content {
+      margin-left: 240px;
+      margin-top: 70px;
+      padding: 1rem;
+      width: 100%;
+    }
+    /* Breadcrumbs */
     .breadcrumbs {
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
     .breadcrumbs a {
+      color: #555;
       text-decoration: none;
-      color: #4CAF50;
-      margin-right: 5px;
     }
-    .breadcrumbs a:hover {
-      text-decoration: underline;
+    /* Buscador */
+    #search-bar {
+      margin-left: 1rem;
     }
-    .breadcrumbs span {
-      margin-right: 5px;
+    /* Productos con scroll infinito */
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 6px;
+    }
+    /* Menú hamburguesa */
+    #hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      #sidebar {
+        display: none;
+      }
+      #hamburger {
+        display: block;
+      }
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: #222;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 200px;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      #content {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div id="hamburger">☰</div>
+    <h1>Instrumentalia</h1>
+    <div>
+      <nav>
+        <ul id="main-menu">
+          <li><a href="#">Inicio</a></li>
+          <li>
+            <a href="#">Instrumentos</a>
+            <ul class="dropdown">
+              <li><a href="#">Guitarras</a></li>
+              <li><a href="#">Pianos</a></li>
+              <li><a href="#">Baterías</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Ofertas</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+      <input type="text" id="search-bar" placeholder="Buscar...">
+    </div>
+  </header>
 
-  <!-- Migas de pan -->
-  <div class="breadcrumbs" id="breadcrumbs"></div>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <h3>Categorías</h3>
+    <a href="#">Guitarras</a><br>
+    <a href="#">Pianos</a><br>
+    <a href="#">Viento</a><br>
+    <a href="#">Percusión</a><br>
+    <a href="#">Accesorios</a><br><br>
 
-  <!-- Hola Mundo -->
-  <h1>¡Hola Mundo! 🌎</h1>
-  <button onclick="mostrarMensaje()">Haz clic aquí</button>
-  <div id="mensaje"></div>
+    <h3>Enlaces relacionados</h3>
+    <a href="#">Guía para principiantes</a><br>
+    <a href="#">Cómo elegir una guitarra</a><br>
+    <a href="#">Mejores teclados 2024</a>
+  </aside>
 
-  <!-- Navegación de ejemplo para migas de pan -->
-  <div>
-    <button onclick="navegar('inicio')">Inicio</button>
-    <button onclick="navegar('productos')">Productos</button>
-    <button onclick="navegar('productos/electronica')">Electrónica</button>
-    <button onclick="navegar('productos/electronica/moviles')">Móviles</button>
-  </div>
+  <!-- Contenido principal -->
+  <main id="content">
+    <div class="breadcrumbs">
+      <a href="#">Inicio</a> > <a href="#">Instrumentos</a> > Guitarras
+    </div>
+
+    <h2>Guitarras Destacadas</h2>
+    <div class="product-list" id="product-list"></div>
+  </main>
 
   <script>
-    // Función del botón Hola Mundo
-    function mostrarMensaje() {
-      document.getElementById('mensaje').textContent = "¡Has presionado el botón! 🎉";
+    // Menú hamburguesa
+    document.getElementById('hamburger').addEventListener('click', function () {
+      document.getElementById('main-menu').classList.toggle('show');
+    });
+
+    // Scroll infinito simulado
+    const productList = document.getElementById("product-list");
+    let productsLoaded = 0;
+
+    function loadProducts() {
+      for (let i = 0; i < 10; i++) {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `<h3>Guitarra ${productsLoaded + i + 1}</h3><p>Descripción breve del instrumento.</p>`;
+        productList.appendChild(div);
+      }
+      productsLoaded += 10;
     }
 
-    // Migas de pan
-    let ruta = ['Inicio'];
+    window.addEventListener("scroll", () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        loadProducts();
+      }
+    });
 
-    function actualizarBreadcrumbs() {
-      const container = document.getElementById('breadcrumbs');
-      container.innerHTML = ruta.map((item, index) => {
-        if (index === ruta.length - 1) {
-          return `<span>${item}</span>`;
-        } else {
-          return `<a href="#" onclick="volver(${index})">${item}</a> &gt; `;
-        }
-      }).join('');
-    }
-
-    function navegar(path) {
-      const partes = path.split('/');
-      ruta = partes.map(p => p.charAt(0).toUpperCase() + p.slice(1));
-      actualizarBreadcrumbs();
-    }
-
-    function volver(index) {
-      ruta = ruta.slice(0, index + 1);
-      actualizarBreadcrumbs();
-    }
-
-    // Inicializamos las migas de pan
-    actualizarBreadcrumbs();
+    loadProducts();
   </script>
-
 </body>
 </html>

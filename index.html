@@ -5,119 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tienda de Instrumentos</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-    }
-    header {
-      background: #222;
-      color: #fff;
-      padding: 1rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-      padding: 0;
-      margin: 0;
-    }
-    nav ul li {
-      position: relative;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    /* Dropdown */
-    .dropdown {
-      display: none;
-      position: absolute;
-      background: #333;
-      padding: 0.5rem;
-      top: 100%;
-      left: 0;
-    }
-    li:hover .dropdown {
-      display: block;
-    }
-    /* Sidebar */
-    #sidebar {
-      width: 220px;
-      background: #f4f4f4;
-      padding: 1rem;
-      position: fixed;
-      top: 70px;
-      bottom: 0;
-      overflow-y: auto;
-    }
-    #content {
-      margin-left: 240px;
-      margin-top: 70px;
-      padding: 1rem;
-      width: 100%;
-    }
-    /* Breadcrumbs */
-    .breadcrumbs {
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .breadcrumbs a {
-      color: #555;
-      text-decoration: none;
-    }
-    /* Buscador */
-    #search-bar {
-      margin-left: 1rem;
-    }
-    /* Productos con scroll infinito */
-    .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-    .product {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 6px;
-    }
-    /* Menú hamburguesa */
-    #hamburger {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; display: flex; }
+    header { background: #222; color: #fff; padding: 1rem; position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+    nav ul { list-style: none; display: flex; gap: 1rem; padding: 0; margin: 0; }
+    nav ul li { position: relative; }
+    nav a { color: #fff; text-decoration: none; font-weight: bold; }
+    .dropdown { display: none; position: absolute; background: #333; padding: 0.5rem; top: 100%; left: 0; }
+    li:hover .dropdown { display: block; }
+    #sidebar { width: 220px; background: #f4f4f4; padding: 1rem; position: fixed; top: 70px; bottom: 0; overflow-y: auto; }
+    #content { margin-left: 240px; margin-top: 70px; padding: 1rem; width: 100%; }
+    .breadcrumbs { font-size: 0.9rem; margin-bottom: 1rem; }
+    .breadcrumbs a { color: #555; text-decoration: none; }
+    #search-bar { margin-left: 1rem; }
+    .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+    .product { border: 1px solid #ddd; padding: 1rem; border-radius: 6px; display: flex; flex-direction: column; align-items: center; }
+    .product img { max-width: 100%; height: auto; border-radius: 4px; margin-bottom: 0.5rem; }
+    #hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
     @media (max-width: 768px) {
-      #sidebar {
-        display: none;
-      }
-      #hamburger {
-        display: block;
-      }
-      nav ul {
-        display: none;
-        flex-direction: column;
-        background: #222;
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 200px;
-      }
-      nav ul.show {
-        display: flex;
-      }
-      #content {
-        margin-left: 0;
-      }
+      #sidebar { display: none; }
+      #hamburger { display: block; }
+      nav ul { display: none; flex-direction: column; background: #222; position: absolute; top: 70px; right: 0; width: 200px; }
+      nav ul.show { display: flex; }
+      #content { margin-left: 0; }
     }
   </style>
 </head>
@@ -145,7 +54,6 @@
     </div>
   </header>
 
-  <!-- Sidebar -->
   <aside id="sidebar">
     <h3>Categorías</h3>
     <a href="#">Guitarras</a><br>
@@ -160,7 +68,6 @@
     <a href="#">Mejores teclados 2024</a>
   </aside>
 
-  <!-- Contenido principal -->
   <main id="content">
     <div class="breadcrumbs" id="breadcrumbs">
       <a href="#">Inicio</a>
@@ -171,19 +78,34 @@
   </main>
 
   <script>
-    // Datos de instrumentos por categoría
+    // Datos de instrumentos por categoría + URL de imagen correspondiente
     const categories = {
-      Guitarras: ["Guitarra Acústica", "Guitarra Eléctrica", "Guitarra Clásica"],
-      Pianos: ["Piano Digital", "Piano Acústico", "Teclado Portátil"],
-      Viento: ["Flauta", "Saxofón", "Trompeta"],
-      Percusión: ["Batería", "Cajón Peruano", "Bongós"],
-      Accesorios: ["Cuerdas", "Atril", "Fundas"]
+      Guitarras: [
+        { name: "Guitarra Acústica", img: "https://images.pexels.com/photos/19371894/pexels-photo-19371894.jpeg" }, // guitarra y piano :contentReference[oaicite:3]{index=3}
+        { name: "Guitarra Eléctrica", img: "https://images.pexels.com/photos/1649354/pexels-photo-1649354.jpeg" }, // ejemplo (buscar en Pexels)
+        { name: "Guitarra Clásica", img: "https://images.pexels.com/photos/1649384/pexels-photo-1649384.jpeg" }  // otro ejemplo
+      ],
+      Pianos: [
+        { name: "Piano Digital", img: "https://images.pexels.com/photos/19371895/pexels-photo-19371895.jpeg" }, // piano y guitarra :contentReference[oaicite:4]{index=4}
+        { name: "Piano Acústico", img: "https://images.pexels.com/photos/1649212/pexels-photo-1649212.jpeg" },
+        { name: "Teclado Portátil", img: "https://images.pexels.com/photos/1649274/pexels-photo-1649274.jpeg" }
+      ],
+      Viento: [
+        { name: "Flauta", img: "https://images.pexels.com/photos/1649349/pexels-photo-1649349.jpeg" },
+        { name: "Saxofón", img: "https://images.pexels.com/photos/1649404/pexels-photo-1649404.jpeg" },
+        { name: "Trompeta", img: "https://images.pexels.com/photos/1649389/pexels-photo-1649389.jpeg" }
+      ],
+      Percusión: [
+        { name: "Batería", img: "https://images.pexels.com/photos/36571/drums-instruments-band-sticks.jpg" },
+        { name: "Cajón Peruano", img: "https://images.pexels.com/photos/245759/pexels-photo-245759.jpeg" },
+        { name: "Bongós", img: "https://images.pexels.com/photos/1649294/pexels-photo-1649294.jpeg" }
+      ],
+      Accesorios: [
+        { name: "Cuerdas", img: "https://images.pexels.com/photos/1649370/pexels-photo-1649370.jpeg" },
+        { name: "Atril", img: "https://images.pexels.com/photos/1649322/pexels-photo-1649322.jpeg" },
+        { name: "Fundas", img: "https://images.pexels.com/photos/1649362/pexels-photo-1649362.jpeg" }
+      ]
     };
-
-    // Menú hamburguesa
-    document.getElementById('hamburger').addEventListener('click', function () {
-      document.getElementById('main-menu').classList.toggle('show');
-    });
 
     const productList = document.getElementById("product-list");
     const categoryTitle = document.getElementById("category-title");
@@ -192,18 +114,21 @@
     function loadCategory(cat) {
       productList.innerHTML = "";
       categoryTitle.textContent = cat;
-
       breadcrumbs.innerHTML = `<a href='#'>Inicio</a> > ${cat}`;
 
       categories[cat].forEach(item => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `<h3>${item}</h3><p>Descripción del instrumento.</p>`;
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>Descripción del instrumento.</p>
+        `;
         productList.appendChild(div);
       });
     }
 
-    // Asignar eventos a categorías del sidebar
+    // Eventos sidebar
     document.querySelectorAll('#sidebar a').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
@@ -212,7 +137,14 @@
       });
     });
 
+    // Menú hamburguesa
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('main-menu').classList.toggle('show');
+    });
+
+    // Cargar categoría por defecto
     loadCategory("Guitarras");
   </script>
 </body>
 </html>
+

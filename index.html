@@ -162,41 +162,57 @@
 
   <!-- Contenido principal -->
   <main id="content">
-    <div class="breadcrumbs">
-      <a href="#">Inicio</a> > <a href="#">Instrumentos</a> > Guitarras
+    <div class="breadcrumbs" id="breadcrumbs">
+      <a href="#">Inicio</a>
     </div>
 
-    <h2>Guitarras Destacadas</h2>
+    <h2 id="category-title">Guitarras Destacadas</h2>
     <div class="product-list" id="product-list"></div>
   </main>
 
   <script>
+    // Datos de instrumentos por categoría
+    const categories = {
+      Guitarras: ["Guitarra Acústica", "Guitarra Eléctrica", "Guitarra Clásica"],
+      Pianos: ["Piano Digital", "Piano Acústico", "Teclado Portátil"],
+      Viento: ["Flauta", "Saxofón", "Trompeta"],
+      Percusión: ["Batería", "Cajón Peruano", "Bongós"],
+      Accesorios: ["Cuerdas", "Atril", "Fundas"]
+    };
+
     // Menú hamburguesa
     document.getElementById('hamburger').addEventListener('click', function () {
       document.getElementById('main-menu').classList.toggle('show');
     });
 
-    // Scroll infinito simulado
     const productList = document.getElementById("product-list");
-    let productsLoaded = 0;
+    const categoryTitle = document.getElementById("category-title");
+    const breadcrumbs = document.getElementById("breadcrumbs");
 
-    function loadProducts() {
-      for (let i = 0; i < 10; i++) {
+    function loadCategory(cat) {
+      productList.innerHTML = "";
+      categoryTitle.textContent = cat;
+
+      breadcrumbs.innerHTML = `<a href='#'>Inicio</a> > ${cat}`;
+
+      categories[cat].forEach(item => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `<h3>Guitarra ${productsLoaded + i + 1}</h3><p>Descripción breve del instrumento.</p>`;
+        div.innerHTML = `<h3>${item}</h3><p>Descripción del instrumento.</p>`;
         productList.appendChild(div);
-      }
-      productsLoaded += 10;
+      });
     }
 
-    window.addEventListener("scroll", () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        loadProducts();
-      }
+    // Asignar eventos a categorías del sidebar
+    document.querySelectorAll('#sidebar a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const cat = a.textContent.trim();
+        if (categories[cat]) loadCategory(cat);
+      });
     });
 
-    loadProducts();
+    loadCategory("Guitarras");
   </script>
 </body>
 </html>

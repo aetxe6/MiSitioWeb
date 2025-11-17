@@ -24,6 +24,14 @@
       align-items: center;
       z-index: 1000;
     }
+
+    /* Barra de búsqueda bajada */
+    #search-bar {
+      margin-left: 1rem;
+      margin-top: 5px;  
+      padding: 5px 10px;
+    }
+
     nav ul {
       list-style: none;
       display: flex;
@@ -38,8 +46,8 @@
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
-    /* Dropdown */
     .dropdown {
       display: none;
       position: absolute;
@@ -51,7 +59,7 @@
     li:hover .dropdown {
       display: block;
     }
-    /* Sidebar */
+
     #sidebar {
       width: 220px;
       background: #f4f4f4;
@@ -67,7 +75,6 @@
       padding: 1rem;
       width: 100%;
     }
-    /* Breadcrumbs */
     .breadcrumbs {
       font-size: 0.9rem;
       margin-bottom: 1rem;
@@ -76,11 +83,6 @@
       color: #555;
       text-decoration: none;
     }
-    /* Buscador */
-    #search-bar {
-      margin-left: 1rem;
-    }
-    /* Productos con scroll infinito */
     .product-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -91,12 +93,18 @@
       padding: 1rem;
       border-radius: 6px;
     }
-    /* Menú hamburguesa */
+    .product img {
+  width: 100%;           /* ocupa todo el ancho del contenedor */
+  object-fit: cover;     /* recorta o escala la imagen sin deformarla */
+  border-radius: 6px;
+}
+
     #hamburger {
       display: none;
       font-size: 1.5rem;
       cursor: pointer;
     }
+
     @media (max-width: 768px) {
       #sidebar {
         display: none;
@@ -123,19 +131,20 @@
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
     <div id="hamburger">☰</div>
     <h1>Instrumentalia</h1>
     <div>
       <nav>
         <ul id="main-menu">
-          <li><a href="#">Inicio</a></li>
+          <li><a href="#" data-cat="Inicio">Inicio</a></li>
           <li>
             <a href="#">Instrumentos</a>
             <ul class="dropdown">
-              <li><a href="#">Guitarras</a></li>
-              <li><a href="#">Pianos</a></li>
-              <li><a href="#">Baterías</a></li>
+              <li><a data-cat="Guitarras">Guitarras</a></li>
+              <li><a data-cat="Pianos">Pianos</a></li>
+              <li><a data-cat="Percusión">Percusión</a></li>
             </ul>
           </li>
           <li><a href="#">Ofertas</a></li>
@@ -146,24 +155,22 @@
     </div>
   </header>
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <aside id="sidebar">
     <br><br><h3>Categorías</h3>
-    <a href="#">Guitarras</a><br>
-    <a href="#">Pianos</a><br>
-    <a href="#">Viento</a><br>
-    <a href="#">Percusión</a><br>
-    <a href="#">Accesorios</a><br><br>
+    <a href="#" data-cat="Guitarras">Guitarras</a><br>
+    <a href="#" data-cat="Pianos">Pianos</a><br>
+    <a href="#" data-cat="Viento">Viento</a><br>
+    <a href="#" data-cat="Percusión">Percusión</a><br>
+    <a href="#" data-cat="Accesorios">Accesorios</a><br><br>
 
     <h3>Enlaces relacionados</h3>
-    <a href="#">Guía para principiantes</a><br>
-    <a href="#">Cómo elegir una guitarra</a><br>
-    <a href="#">Mejores teclados 2024</a><br>
-    <a href="https://www.youtube.com/watch?v=2VwsvrPFr9w" target="_blank">Video: Cómo elegir tu primera guitarra</a><br>
-    <a href="https://www.youtube.com/watch?v=Km3YlA4xS_s" target="_blank">Video: Introducción al piano para principiantes</a>
+
+    <a href="https://www.youtube.com/watch?v=sjCVJHoRjtI" target="_blank">Video: Cómo elegir tu primera guitarra</a><br>
+    <a href="https://www.youtube.com/watch?v=kAALQ4JEY6c" target="_blank">Video: Introducción al piano para principiantes</a>
   </aside>
 
-  <!-- Contenido principal -->
+  <!-- MAIN CONTENT -->
   <main id="content">
     <div class="breadcrumbs" id="breadcrumbs">
       <a href="#">Inicio</a>
@@ -173,13 +180,29 @@
     <div class="product-list" id="product-list"></div>
   </main>
 
+  <!-- SCRIPT -->
   <script>
-    // Datos de instrumentos por categoría
+    // CATEGORÍAS PRINCIPALES
     const categories = {
       Guitarras: [
-        { name: "Guitarra Acústica", img: "https://upload.wikimedia.org/wikipedia/commons/4/45/Guitare_classique_Concert.png" },
-        { name: "Guitarra Eléctrica", img: "https://upload.wikimedia.org/wikipedia/commons/4/4e/GuitareFenderTelecaster.jpg" },
-        { name: "Guitarra Clásica", img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Classical_Guitar_full_shot.jpg" }
+        { 
+          name: "Guitarra Acústica", 
+          img: "./images/acustica.jpg",
+          desc: "Produce un sonido cálido y natural gracias a su caja de resonancia.",
+          type: "Acustica"
+        },
+        { 
+          name: "Guitarra Eléctrica", 
+          img: "./images/electrica.jpg",
+          desc: "Ideal para rock, metal y blues; necesita amplificador para sonar.",
+          type: "Electrica"
+        },
+        { 
+          name: "Guitarra Clásica", 
+          img: "./images/clasica.jpg",
+          desc: "Utiliza cuerdas de nylon, perfecta para principiantes y música clásica.",
+          type: "Clasica"
+        }
       ],
       Pianos: ["Piano Digital", "Piano Acústico", "Teclado Portátil"],
       Viento: ["Flauta", "Saxofón", "Trompeta"],
@@ -187,7 +210,23 @@
       Accesorios: ["Cuerdas", "Atril", "Fundas"]
     };
 
-    // Menú hamburguesa
+    // CATÁLOGO DE GUITARRAS DETALLADO
+    const guitarsCatalog = {
+      Acustica: [
+        { name: "Fender FA-125", img: "./images/acustica1.jpg", price: "129€", desc: "Modelo acústico con gran resonancia y comodidad para principiantes." },
+        { name: "Yamaha F310", img: "./images/acustica2.jpg", price: "145€", desc: "Una guitarra equilibrada y duradera, muy recomendada para estudio." }
+      ],
+      Electrica: [
+        { name: "Squier Stratocaster", img: "./images/electrica1.jpg", price: "199€", desc: "Versátil, ideal para rock, pop y blues." },
+        { name: "Epiphone Les Paul 100", img: "./images/electrica2.jpeg", price: "249€", desc: "Sonido poderoso y cálido característico del estilo Les Paul." }
+      ],
+      Clasica: [
+        { name: "Alhambra 1C", img: "./images/clasica1.jpg", price: "289€", desc: "Guitarra de gran calidad, hecha en España." },
+        { name: "Yamaha C40", img: "./images/clasica2.jpg", price: "135€", desc: "La guitarra clásica más recomendada para principiantes." }
+      ]
+    };
+
+    // HAMBURGER
     document.getElementById('hamburger').addEventListener('click', function () {
       document.getElementById('main-menu').classList.toggle('show');
     });
@@ -196,31 +235,125 @@
     const categoryTitle = document.getElementById("category-title");
     const breadcrumbs = document.getElementById("breadcrumbs");
 
+    // FUNCION PARA CARGAR CATEGORIAS PRINCIPALES
     function loadCategory(cat) {
+      if (!categories[cat]) return;
+
       productList.innerHTML = "";
       categoryTitle.textContent = cat;
-
       breadcrumbs.innerHTML = `<a href='#'>Inicio</a> > ${cat}`;
 
       categories[cat].forEach(item => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `<h3>${item}</h3><p>Descripción del instrumento.</p>`;
+
+        if (typeof item === "object") {
+          div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <h3 class="guitar-link" data-type="${item.type}">${item.name}</h3>
+            <p>${item.desc}</p>
+          `;
+          // CLICK PARA CARGAR EL CATALOGO DE CADA TIPO
+          div.querySelector(".guitar-link").addEventListener("click", () => {
+            loadGuitarCatalog(item.type);
+          });
+        } else {
+          div.innerHTML = `
+            <h3>${item}</h3>
+            <p>Descripción del instrumento.</p>
+          `;
+        }
         productList.appendChild(div);
       });
     }
 
-    // Asignar eventos a categorías del sidebar
-    document.querySelectorAll('#sidebar a').forEach(a => {
-      a.addEventListener('click', e => {
+    // FUNCION PARA CARGAR CATALOGO DETALLADO DE GUITARRAS
+    function loadGuitarCatalog(type) {
+      const list = guitarsCatalog[type];
+      if (!list) return;
+
+      productList.innerHTML = "";
+      categoryTitle.textContent = "Modelos de " + type;
+      breadcrumbs.innerHTML = `<a href='#'>Inicio</a> > <a href='#' data-cat="Guitarras">Guitarras</a> > ${type}`;
+
+      list.forEach(guitar => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${guitar.img}" alt="${guitar.name}">
+          <h3>${guitar.name}</h3>
+          <p>${guitar.desc}</p>
+          <p><strong>${guitar.price}</strong></p>
+        `;
+        productList.appendChild(div);
+      });
+    }
+    // BÚSQUEDA DE INSTRUMENTOS
+const searchBar = document.getElementById("search-bar");
+searchBar.addEventListener("input", () => {
+  const query = searchBar.value.toLowerCase().trim();
+  if (!query) {
+    loadCategory("Guitarras"); // Muestra la categoría por defecto si el campo está vacío
+    return;
+  }
+
+  let results = [];
+
+  // Buscar en categorías principales
+  for (const cat in categories) {
+    categories[cat].forEach(item => {
+      if (typeof item === "object") {
+        if (item.name.toLowerCase().includes(query)) {
+          results.push(item);
+        }
+      } else {
+        if (item.toLowerCase().includes(query)) {
+          results.push({ name: item, desc: "Descripción del instrumento." });
+        }
+      }
+    });
+  }
+
+  // Mostrar resultados
+  productList.innerHTML = "";
+  categoryTitle.textContent = `Resultados para "${query}"`;
+  breadcrumbs.innerHTML = `<a href='#'>Inicio</a> > Resultados`;
+
+  if (results.length === 0) {
+    productList.innerHTML = "<p>No se encontraron instrumentos.</p>";
+    return;
+  }
+
+  results.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "product";
+    if (item.img) {
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+      `;
+    } else {
+      div.innerHTML = `
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+      `;
+    }
+    productList.appendChild(div);
+  });
+});
+
+
+    // ACTIVAR MENU SUPERIOR Y SIDEBAR
+    document.querySelectorAll("[data-cat]").forEach(el => {
+      el.addEventListener("click", e => {
         e.preventDefault();
-        const cat = a.textContent.trim();
-        if (categories[cat]) loadCategory(cat);
+        loadCategory(el.dataset.cat);
       });
     });
 
+    // CARGA INICIAL
     loadCategory("Guitarras");
   </script>
 </body>
 </html>
-
